@@ -1,0 +1,43 @@
+{% extends 'shop/base.html' %} {% block content %}
+<div class="container">
+    <div class="col-lg-5 col-sm-6 col-lg-offset-4 col-sm-offset-3">
+        <h1 class="text-bold">Register</h1>
+        <hr>
+        <form class="no-overflow" action="{% url 'shop:register' %}" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input class="form-control" name="username" type="text" autofocus required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input class="form-control" name="password" type="password" required>
+            </div>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input class="form-control" type="text" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="name">Last Name</label>
+                <input class="form-control" type="text" name="last_name" required>
+            </div>
+            <div class="form-group">
+                <label for="name">Birthday</label>
+                <input class="form-control" type="date" name="birthday" required>
+            </div>
+            <div class="form-group">
+                <label for="name">E-Mail</label>
+                <input class="form-control" type="email" name="email" required>
+            </div>
+            <div class="no-overflow">
+                <input class="btn btn-primary form-control" type="submit">
+            </div>
+            {% if error_message %}
+            <div class="bg-danger padded-top-bot-10">
+                <span class="text-warning">{{ error_message }}</span>
+            </div>
+            {% endif %}
+        </form>
+    </div>
+</div>
+{% endblock %}

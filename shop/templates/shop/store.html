@@ -1,0 +1,13 @@
+{% extends "shop/base.html" %}<!--PREPEND FOLDER NAME FOR IT TO WORK, WHY THOU?-->
+
+{% block content %}
+    <h4 id="token" style="display: none">{{ csrf_token }}</h4>
+    <div class="container-fluid full-height">
+        <div class="col-sm-5 overflow-auto full-height">
+            {% include 'shop/products.html' %}
+        </div>
+        <div class="col-sm-7 padded-30 overflow-auto full-height" id="cart">
+            {% include 'shop/cart.html' %}
+        </div>
+    </div>
+{% endblock %}

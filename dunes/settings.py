@@ -27,6 +27,8 @@ SECRET_KEY = '@r(dzf@%u%)hbwa&gdk^5i0nd8di#^@%6r_ax%2by3$9ii^hzh'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+#TEMPLATE_DEBUG #DEPRECATED
+
 ALLOWED_HOSTS = []
 
 #APPEND_SLASH = False
@@ -40,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'shop.apps.ShopConfig'
 ]
 
 MIDDLEWARE = [
@@ -66,6 +69,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'debug': DEBUG
         },
     },
 ]
@@ -121,3 +125,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+#CUSTOM SETTINGS
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.file'

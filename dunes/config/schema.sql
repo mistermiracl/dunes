@@ -78,28 +78,59 @@ CREATE PROCEDURE usp_Product_Find(IN proID INT)
     
 -- ORDERS
 
-CREATE PROCEDURE usp_Orders_Create()
-    ID INT PRIMARY KEY AUTO_INCREMENT,
-    OrderDate TIMESTAMP,
-    CurrentOrder BIT(1),
-    CustomerID INT,
-CREATE PROCEDURE usp_Orders_Update()
+CREATE PROCEDURE usp_Orders_Create(IN orDate TIMESTAMP, IN currOrder BIT(1), IN cusID INT)
+    INSERT INTO Orders(OrderDate, CurrentOrder, CustomerID)
+        VALUES (orDate, currOrder, cusID);
 
-CREATE PROCEDURE usp_Orders_Delete()
+CREATE PROCEDURE usp_Orders_Update(IN orID INT, IN currOrder BIT(1))
+    UPDATE Orders SET CurrentOrder = currOrder 
+    WHERE ID = orID;
 
-CREATE PROCEDURE usp_Orders_Find()
+DELIMITER //
+CREATE PROCEDURE usp_Orders_Delete(IN orID INT)
+    BEGIN
+        DELETE FROM `Order Details` WHERE OrderID = orID;
+        DELETE FROM Orders WHERE ID = orID;
+    END//
+DELIMITER ;
 
-CREATE PROCEDURE usp_Orders_FindAll()
+CREATE PROCEDURE usp_Orders_Find(IN orID INT)
+    SELECT ID, OrderDate, CONVERT(CurrentOrder, UNSIGNED) AS CurrentOrder, CustomerID
+    FROM Orders WHERE ID = orID;
 
+CREATE PROCEDURE usp_Orders_FindAll(IN cusID INT)
+    SELECT ID, OrderDate, CAST(CurrentOrder AS UNSIGNED) CurrentOrder, CustomerID
+    FROM Orders WHERE CustomerID = cusID;
+
+CREATE PROCEDURE usp_Orders_Find_Current(IN cusID INT)
+    SELECT ID, OrderDate, CONVERT(CurrentOrder, UNSIGNED) CurrentOrder, CustomerID
+    FROM Orders WHERE CustomerID = cusID AND CONVERT(CurrentOrder, UNSIGNED) = 1;
+    
 -- ORDER DETAILS
 
-CREATE PROCEDURE usp_OrderDetails_Create()
+CREATE PROCEDURE usp_OrderDetails_Create(IN orID INT, IN proID INT, IN quan INT, IN uPrice DECIMAL(12,2))
+    INSERT INTO `Order Details`(OrderID, ProductID, Quantity, UnitPrice)
+        VALUES (orID, proID, quan, uPrice);
 
-CREATE PROCEDURE usp_OrderDetails_Update()
+CREATE PROCEDURE usp_OrderDetails_Update(IN odID INT, IN quan INT)
+    UPDATE `Order Details` SET Quantity = quan
+    WHERE ID = odID;
 
-CREATE PROCEDURE usp_OrderDetails_Delete()
+CREATE PROCEDURE usp_OrderDetails_Delete(IN odID INT)
+    DELETE FROM `Order Details` 
+    WHERE ID = odID;
 
-CREATE PROCEDURE usp_OrderDetails_Find()
+CREATE PROCEDURE usp_OrderDetails_Find(IN odID INT)
+    SELECT ID, OrderID, ProductID, Quantity, UnitPrice
+    FROM `Order Details` WHERE ID = odID;
 
-CREATE PROCEDURE usp_OrderDetails_FindAll()
+CREATE PROCEDURE usp_OrderDetails_FindAll(IN orID INT)
+    SELECT ID, OrderID, ProductID, Quantity, UnitPrice
+    FROM `Order Details` WHERE OrderID = orID;
+
+-- CUSTOM
+
+--CREATE PROCEDURE usp_Orders_And_Details_Find()
+
+--CREATE PROCEDURE usp_Orders_And_Details_FindAll()
 

@@ -17,6 +17,6 @@ from django.contrib import admin
 from django.urls import path, re_path, include
 
 urlpatterns = [
-    re_path(r'^', include('shop.urls')),
+    re_path(r'^', include('shop.urls')),#DONT USE $ HERE SINCE IT ENFORCES ENDING(IN THIS CASE IT WOULD BE EMPTY)
     path('admin/', admin.site.urls)
 ]

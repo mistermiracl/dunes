@@ -2,9 +2,14 @@
 import os
 import sys
 
+REQUIREMENTS: str = '%s\\requirements.txt' % os.path.dirname(os.path.abspath(__file__))
+
 if __name__ == "__main__":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "dunes.settings")
     try:
+        #UNCOMMENT TO INSTALL ALL PROJECT DEPENDENCIES
+        #os.system('pip install -r %s' % REQUIREMENTS)
+
         from django.core.management import execute_from_command_line
     except ImportError as exc:
         raise ImportError(

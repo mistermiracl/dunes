@@ -1,0 +1,52 @@
+<h3 id="cart-heading">
+    Shopping Cart</h3>
+<hr>
+<div id="order" class="overflow-y full-height" data-id="{{ current_order_dto.identifier }}">
+    {% if current_order_dto %}
+    <div>
+        {% for detail in current_order_dto.order_details_dto %}
+        <div class="cart-item" data-id="{{ detail.identifier }}">
+            <div class="no-overflow">
+                <div class="col-sm-2 center-vertical">
+                    <span class="col-sm-6 glyphicon glyphicon-remove font-size-20 cart-item-action cross"></span>
+                    <span class="col-sm-6 glyphicon glyphicon-heart font-size-20 cart-item-action favorite"></span>
+                </div>
+                <div class="col-sm-2">
+                    <img class="img-responsive" src="{{ detail.product.image_path }}" alt="Some Img">
+                </div>
+                <div class="col-sm-3 center-vertical">
+                    <h5 class="no-margin cart-item-title text-bold">{{ detail.product.name }}</h5>
+                    <p class="cart-item-desc">White</p>
+                </div>
+                <div class="col-sm-3 center-vertical">
+                    <button class="cart-item-button minus">
+                        <i class="glyphicon glyphicon-minus"></i>
+                    </button>
+                    <span class="padded-left-right-5">{{ detail.quantity|default:1 }}</span>
+                    <button class="cart-item-button plus">
+                        <i class="glyphicon glyphicon-plus"></i>
+                    </button>
+                </div>
+                <div class="col-sm-2 center-vertical">
+                    <span>S/. {{ detail.total_price }}</span>
+                    {# {% widthratio detail.order_detail.unit_price 1 detail.order_detail.quantity %}--> #}
+                </div>
+            </div>
+            <hr>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="bg-warning padded-15">
+        <h4 class="padded-left-right-15">There are no items in the cart</h4>
+    </div>
+    {% endif %}
+</div>
+
+<div class="padded-30">
+    <label class="font-size-20">Total Price:
+        <span>S/. {{ current_order_dto.full_price|default:0 }}</span>
+    </label>
+</div>
+
+<button id="order-button">PLACE ORDER</button>
